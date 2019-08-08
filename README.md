@@ -1,7 +1,6 @@
 # eye_movement_tracker
 
-This is a demo project to try out TensorFlow.js. It's a website that learns to
-track your eye movement inside the browser. No backend neccessary.
+This is demo project using TensorFlow.js. Using a pre trained model to detect a blink in either eyes. No backend neccessary.
 
 ## Original App
 
