@@ -5,11 +5,35 @@ $(document).ready(function() {
   const ctrack = new clm.tracker();
   ctrack.init();
 
-  function getEyesRectangle(positions) {
+  function getRightEyeRectangle(positions) {
+    const minX = positions[23][0] - 5;
+    const maxX = positions[25][0] + 5;
+    const minY = positions[24][1] - 5;
+    const maxY = positions[26][1] + 5;
+
+    const width = maxX - minX;
+    const height = maxY - minY;
+
+    return [minX, minY, width, height];
+  }
+
+  function getEyeRectangle(positions) {
     const minX = positions[23][0] - 5;
     const maxX = positions[28][0] + 5;
     const minY = positions[24][1] - 5;
     const maxY = positions[26][1] + 5;
+
+    const width = maxX - minX;
+    const height = maxY - minY;
+
+    return [minX, minY, width, height];
+  }
+
+  function getLeftEyeRectangle(positions) {
+    const minX = positions[30][0] - 5;
+    const maxX = positions[28][0] + 5;
+    const minY = positions[29][1] - 5;
+    const maxY = positions[31][1] + 5;
 
     const width = maxX - minX;
     const height = maxY - minY;
@@ -28,9 +52,14 @@ $(document).ready(function() {
       ctrack.draw(overlay);
 
       // Get the eyes rectangle and draw it in red:
-      const eyesRect = getEyesRectangle(currentPosition);
+      const rightEyeRect = getRightEyeRectangle(currentPosition);
+      const leftEyeRect = getLeftEyeRectangle(currentPosition);
+      //const eyesRect = getEyeRectangle(currentPosition);
+    
       overlayCC.strokeStyle = 'red';
-      overlayCC.strokeRect(eyesRect[0], eyesRect[1], eyesRect[2], eyesRect[3]);
+
+      overlayCC.strokeRect(leftEyeRect[0], leftEyeRect[1], leftEyeRect[2], leftEyeRect[3]);
+      overlayCC.strokeRect(rightEyeRect[0], rightEyeRect[1], rightEyeRect[2], rightEyeRect[3]);
 
       // The video might internally have a different size, so we need these
       // factors to rescale the eyes rectangle before cropping:
@@ -38,22 +67,64 @@ $(document).ready(function() {
       const resizeFactorY = video.videoHeight / video.height;
 
       // Crop the eyes from the video and paste them in the eyes canvas:
-      const eyesCanvas = $('#eyes')[0];
-      const eyesCC = eyesCanvas.getContext('2d');
+      
+      
+      // const eyesCanvas = $('#eyes')[0];
 
-      eyesCC.drawImage(
-        video,
-        eyesRect[0] * resizeFactorX,
-        eyesRect[1] * resizeFactorY,
-        eyesRect[2] * resizeFactorX,
-        eyesRect[3] * resizeFactorY,
-        0,
-        0,
-        eyesCanvas.width,
-        eyesCanvas.height,
-      );
-    }
-  }
+      // const eyesCC = eyesCanvas.getContext('2d');
+
+      // eyesCC.drawImage(
+      //   video,
+      //   eyesRect[0] * resizeFactorX,
+      //   eyesRect[1] * resizeFactorY,
+      //   eyesRect[2] * resizeFactorX,
+      //   eyesRect[3] * resizeFactorY,
+      //   0,
+      //   0,
+      //   eyesCanvas.width,
+      //   eyesCanvas.height,
+      // );
+    
+
+    // Crop the eyes from the video and paste them in the eyes canvas:
+    const leftEyeCanvas = $('#leftEye')[0];
+
+    const leftEyeCC = leftEyeCanvas.getContext('2d');
+
+    leftEyeCC.drawImage(
+      video,
+      leftEyeRect[0] * resizeFactorX,
+      leftEyeRect[1] * resizeFactorY,
+      leftEyeRect[2] * resizeFactorX,
+      leftEyeRect[3] * resizeFactorY,
+      0,
+      0,
+      leftEyeCanvas.width,
+      leftEyeCanvas.height,
+    );
+  
+
+
+
+  // Crop the eyes from the video and paste them in the eyes canvas:
+  const rightEyeCanvas = $('#rightEye')[0];
+
+  const rightEyeCC = rightEyeCanvas.getContext('2d');
+
+  rightEyeCC.drawImage(
+    video,
+    rightEyeRect[0] * resizeFactorX,
+    rightEyeRect[1] * resizeFactorY,
+    rightEyeRect[2] * resizeFactorX,
+    rightEyeRect[3] * resizeFactorY,
+    0,
+    0,
+    rightEyeCanvas.width,
+    rightEyeCanvas.height,
+  );
+
+}
+}
 
   function onStreaming(stream) {
     video.srcObject = stream;
@@ -84,10 +155,15 @@ $(document).ready(function() {
   function getImage() {
     // Capture the current image in the eyes canvas as a tensor.
     return tf.tidy(function() {
-      const image = tf.browser.fromPixels($('#eyes')[0]);
+      debugger
+      const image = tf.browser.fromPixels($('#leftEye')[0]);
+
       // Add a batch dimension:
       const batchedImage = image.expandDims(0);
       // Normalize and return it:
+      
+      //debugger()
+     
       return batchedImage
         .toFloat()
         .div(tf.scalar(127))
@@ -113,7 +189,7 @@ $(document).ready(function() {
     tf.tidy(function() {
       const image = getImage();
       const mousePos = tf.tensor1d([mouse.x, mouse.y]).expandDims(0);
-
+      console.log(mousePos);
       // Choose whether to add it to training (80%) or validation (20%) set:
       const subset = dataset[Math.random() > 0.2 ? 'train' : 'val'];
 
@@ -132,6 +208,7 @@ $(document).ready(function() {
 
       // Increase counter
       subset.n += 1;
+      console.log(subset)
     });
   }
 
@@ -156,7 +233,7 @@ $(document).ready(function() {
         filters: 20,
         strides: 1,
         activation: 'relu',
-        inputShape: [$('#eyes').height(), $('#eyes').width(), 3],
+        inputShape: [$('#leftEye').height(), $('#leftEye').width(), 1],
       }),
     );
 
@@ -212,30 +289,41 @@ $(document).ready(function() {
     fitModel();
   });
 
-  function moveTarget() {
+  // function moveTarget() {
+  //   if (currentModel == null) {
+  //     return;
+  //   }
+  //   tf.tidy(function() {
+  //     const image = getImage();
+  //     const prediction = currentModel.predict(image);
+
+  //     // Convert normalized position back to screen position:
+  //     const targetWidth = $('#target').outerWidth();
+  //     const targetHeight = $('#target').outerHeight();
+  //     const x =
+  //       ((prediction.dataSync()[0] + 1) / 2) *
+  //       ($(window).width() - targetWidth);
+  //     const y =
+  //       ((prediction.dataSync()[1] + 1) / 2) *
+  //       ($(window).height() - targetHeight);
+
+  //     // Move target there:
+  //     const $target = $('#target');
+  //     $target.css('left', x + 'px');
+  //     $target.css('top', y + 'px');
+  //   });
+  // }
+
+
+    function predictBlink() {
     if (currentModel == null) {
       return;
     }
     tf.tidy(function() {
       const image = getImage();
       const prediction = currentModel.predict(image);
-
-      // Convert normalized position back to screen position:
-      const targetWidth = $('#target').outerWidth();
-      const targetHeight = $('#target').outerHeight();
-      const x =
-        ((prediction.dataSync()[0] + 1) / 2) *
-        ($(window).width() - targetWidth);
-      const y =
-        ((prediction.dataSync()[1] + 1) / 2) *
-        ($(window).height() - targetHeight);
-
-      // Move target there:
-      const $target = $('#target');
-      $target.css('left', x + 'px');
-      $target.css('top', y + 'px');
+      console.log(prediction.dataSync()[0]);
     });
   }
-
-  setInterval(moveTarget, 100);
+  setInterval(predictBlink, 100);
 });
