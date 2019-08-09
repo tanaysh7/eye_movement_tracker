@@ -1,0 +1,25 @@
+{
+  "name": "no-blinking",
+  "version": "1.0.0",
+  "description": "real time blink detection in javascript\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001busing javascript",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanaysh7/eye_movement_tracker.git"
+  },
+  "keywords": [
+    "blink",
+    "eye",
+    "tensorflowjs",
+    "tfjs"
+  ],
+  "author": "Tanay Shankar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanaysh7/eye_movement_tracker/issues"
+  },
+  "homepage": "https://github.com/tanaysh7/eye_movement_tracker#readme"
+}
