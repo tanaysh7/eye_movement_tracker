@@ -1,3 +1,8 @@
+
+
+
+
+
 $(document).ready(function() {
   const video = $('#webcam')[0];
   const overlay = $('#overlay')[0];
