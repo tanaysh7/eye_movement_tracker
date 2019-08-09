@@ -2,7 +2,7 @@
   "name": "no-blinking",
   "version": "1.0.0",
   "description": "real time blink detection in javascript\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001busing javascript",
-  "main": "index.html",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
