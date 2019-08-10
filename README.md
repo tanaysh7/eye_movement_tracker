@@ -12,8 +12,3 @@ guide you through it.
 ### Blink detection
 
 [Demo](https://no-blinking.herokuapp.com/index.html)
-
-
-### Original App
-
-[Demo](https://cpury.github.io/lookie-lookie/)
