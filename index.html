@@ -1,95 +1,60 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+
+	<link rel="stylesheet" type="text/css" href="css/brfv4_examples_theme.css">
+	<title>Beyond Reality Face - BRFv4 - HTML5/Javascript face tracking</title>
+
+	<script src="js/libs/createjs/preloadjs.min.js"></script>
+	<script src="js/BRFv4Demo.js"></script>
+
+	<script>
+		window.onload = brfv4Example.start; //see js/BRFv4Demo.js
+	</script>
+
+</head>
 
 <body>
-    <video id="webcam" width="400" height="300" autoplay></video>
-    <canvas id="overlay" width="400" height="300"></canvas>
-    <style>
-        #webcam,
-        #overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-    </style>
 
-    <!-- <canvas id="eyes" width="50" height="25"></canvas>
-    <style>
-        #eyes {
-            position: absolute;
-            top: 55%;
-            right: 48%;
-        }
-    </style> -->
+<div id="_wrapper">
+		
+	<div id="_content">
+		<h2 id="blink"> </h2>
+		
+		<style>
+		#blink{color: purple;}
+		#eyeClosed{color: Red;
+  position: absolute;
+  right: 10px;
+  width: 200px;
+ 
+  border: 3px solid green;
+} 
+		</style>
+		<video  id="_webcam" playsinline></video>
+		<canvas id="_imageData"></canvas>
+		<canvas id="_faceSub"></canvas>
+		<canvas id="_t3d"></canvas>
+		<canvas id="_f3d"></canvas>
+		<canvas id="_drawing"></canvas>
+		<!-- <div id="_stats"></div>
+		<div id="_progressBar"></div> -->
+		<!-- <a href="http://www.tastenkunst.com" target="_blank">
+			<img id="_brfv4_logo" src="assets/brfv4_logo.png" alt="BRFv4 Logo"/>
+		</a> -->
 
+		
+	</div>
+<!-- 
+	<div id="_subline"></div>
+	<div id="_highlight"><pre><code class="javascript" id="_gist"></code></pre></div> -->
+</div>
+<h3 id="eyeClosed"> </h3>
 
+<!-- <div id="_settingsRight"></div> -->
 
-    <button id="train">Train!</button>
-    <div id='leftprediction'>
-        <canvas id="leftEye" width="30" height="25"></canvas>
-        <style>
-            #leftEye {
-                right: 0;
-            }
-        </style>
-
-        LEFT: OPEN
-    </div>
-    <style>
-        #leftprediction {
-            position: absolute;
-            top: 40%;
-            left: 43%;
-            transform: translate(-50%, -50%);
-            font-size: 13pt;
-        }
-    </style>
-    <div id='rightprediction'>RIGHT: OPEN
-        <canvas id="rightEye" width="30" height="25"></canvas>
-        <style>
-            #rightEye {
-                left: 0;
-            }
-        </style>
-
-    </div>
-    <style>
-        #rightprediction {
-            position: absolute;
-            top: 40%;
-            left: 58%;
-            transform: translate(-50%, -50%);
-            font-size: 13pt;
-        }
-    </style>
-    <style>
-        #train {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24pt;
-        }
-    </style>
-
-    <!-- <div id="target"></div>
-    <style>
-        #target {
-            background-color: lightgreen;
-            position: absolute;
-            border-radius: 50%;
-            height: 40px;
-            width: 40px;
-            transition: all 0.1s ease;
-            box-shadow: 0 0 20px 10px white;
-            border: 4px solid rgba(0,0,0,0.5);
-        }
-    </style> -->
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.1.0"></script>
-    <script src="clmtrackr.js"></script>
-    <script src="main.js"></script>
 </body>
 
 </html>
