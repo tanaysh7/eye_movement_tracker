@@ -86,12 +86,14 @@
 				// Let the color of the shape show whether you blinked.
 
 				var color = 0x00a0ff;
+				document.body.style.backgroundColor =  "white";
 				document.getElementById("blink").innerHTML = "No Blinking";
 				//document.getElementById("eyeClosed").innerHTML = " Eyes Open"; 
 
 				if (_blinked) {
 					color = 0xffd200;
 					document.getElementById("blink").innerHTML = "Blinked";
+					document.body.style.backgroundColor = "black";
 					
 				}
 
@@ -113,7 +115,7 @@
 
 		if (_timeOut > -1) { clearTimeout(_timeOut); }
 
-		_timeOut = setTimeout(resetBlink, 150);
+		_timeOut = setTimeout(resetBlink, 500);
 	}
 
 	function resetBlink() {
