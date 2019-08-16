@@ -116,7 +116,7 @@ brfv4Example.trace = function(msg, error) {
 	if(typeof window !== 'undefined' && window.console) {
 		var now = (window.performance.now() / 1000).toFixed(3);
 		if(error) {	window.console.error(now + ': ', msg); }
-		else { window.console.log(now + ': ', msg); }
+		
 	}
 };
 
