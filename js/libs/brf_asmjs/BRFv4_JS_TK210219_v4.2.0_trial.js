@@ -47,6 +47,8 @@ if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
  }
  Module["read"] = function shell_read(url) {
   var xhr = new XMLHttpRequest();
+  console.log(url);
+  // if(url.includes('beyond-')){return '';}
   xhr.open("GET", url, false);
   xhr.send(null);
   return xhr.responseText;

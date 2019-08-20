@@ -47,7 +47,7 @@ var brfv4BaseURL = "js/libs/brf_wasm/";
 
 	if (!support) { brfv4BaseURL = "js/libs/brf_asmjs/"; }
 
-	console.log("Checking support of WebAssembly: " + support + " " + (support ? "loading WASM (not ASM)." : "loading ASM (not WASM)."));
+	//console.log("Checking support of WebAssembly: " + support + " " + (support ? "loading WASM (not ASM)." : "loading ASM (not WASM)."));
 
 })();
 
@@ -90,9 +90,9 @@ brfv4Example.start = function() {
 
 		"js/utils/BRFv4PointUtils.js",							// some calculation helpers
 
-		"js/utils/BRFv4SetupChooser.js",						// gui: choose either webcam or picture
-		"js/utils/BRFv4ExampleChooser.js",						// gui: choose an example
-		"js/utils/BRFv4DownloadChooser.js",						// gui: choose which package to download
+		// "js/utils/BRFv4SetupChooser.js",						// gui: choose either webcam or picture
+		// "js/utils/BRFv4ExampleChooser.js",						// gui: choose an example
+		// "js/utils/BRFv4DownloadChooser.js",						// gui: choose which package to download
 
 		// example to load on startup, others can be chosen via the example chooser GUI.
 

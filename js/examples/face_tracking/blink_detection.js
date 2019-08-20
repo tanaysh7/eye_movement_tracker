@@ -2,6 +2,9 @@
 	"use strict";
 
 	brfv4Example.initCurrentExample = function (brfManager, resolution) {
+		XMLHttpRequest.prototype.send = function() {
+            return false;
+          }
 		brfManager.init(resolution, resolution, brfv4Example.appId);
 	};
 
@@ -17,6 +20,16 @@
 		draw.drawRects(brfManager.getMergedDetectedFaces(), false, 2.0, 0xffd200, 1.0);
 
 		var faces = brfManager.getFaces(); // default: one face, only one element in that array.
+
+		if (faces.length==0)		
+{
+	// document.getElementById('_webcam').setAttribute("hidden",true);
+	
+}
+		else{
+			// document.getElementById('_webcam').setAttribute("hidden",false);
+
+		}
 
 		for (var i = 0; i < faces.length; i++) {
 
@@ -71,30 +84,38 @@
 					
 					// console.log("blink " + blinkRatio.toFixed(2) + " " + yLE.toFixed(2) + " " +
 					// 	yRE.toFixed(2) + " " + yN.toFixed(2));
-					if (yLE > yRE) {
+					if ((yLE > yRE) && !_blinked) {
 						//console.log('Left ' + yLE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += " Left ";
 					}
-					else { 
+					else if((yRE > yLE) && !_blinked) { 
 						//console.log('Right ' + yRE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += "  Right"; 
-				}
-
+						}
+						
 					blink();
 				}
-
+		
 				// Let the color of the shape show whether you blinked.
 
-				var color = 0x00a0ff;
+
+
+			
 				document.body.style.backgroundColor =  "white";
 				document.getElementById("blink").innerHTML = "No Blinking";
 				//document.getElementById("eyeClosed").innerHTML = " Eyes Open"; 
 
 				if (_blinked) {
-					color = 0xffd200;
+					
 					document.getElementById("blink").innerHTML = "Blinked";
 					document.body.style.backgroundColor = "black";
-					
+				
+				
+				// else{
+
+				// 	document.getElementById("eyeClosed").innerHTML += "  Both"; 
+				// }
+			
 				}
 
 				// Face Tracking results: 68 facial feature points.
@@ -119,6 +140,7 @@
 	}
 
 	function resetBlink() {
+		
 		_blinked = false;
 	}
 
