@@ -2,9 +2,9 @@
 	"use strict";
 
 	brfv4Example.initCurrentExample = function (brfManager, resolution) {
-		XMLHttpRequest.prototype.send = function() {
-            return false;
-          }
+		// XMLHttpRequest.prototype.send = function() {
+        //     return false;
+        //   }
 		brfManager.init(resolution, resolution, brfv4Example.appId);
 	};
 
