@@ -111,20 +111,13 @@
 					document.body.style.backgroundColor = "black";
 				
 				
-				// else{
-
-				// 	document.getElementById("eyeClosed").innerHTML += "  Both"; 
-				// }
+			
 			
 				}
 
 				// Face Tracking results: 68 facial feature points.
 
-				//draw.drawTriangles(face.vertices, face.triangles, false, 1.0, color, 0.4);
-				//draw.drawVertices(face.vertices, 2.0, false, color, 0.4);
-
-				// brfv4Example.dom.updateHeadline("BRFv4 - advanced - face tracking - simple blink" +
-				// 	"detection.\nDetects an eye  blink: " + (_blinked ? "Yes" : "No"));
+				
 
 				storeFaceShapeVertices(v);
 			}
