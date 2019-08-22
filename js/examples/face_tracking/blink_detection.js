@@ -6,7 +6,20 @@
         //     return false;
         //   }
 		brfManager.init(resolution, resolution, brfv4Example.appId);
+
+
+		
 	};
+
+
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+		  color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	  }
 
 	brfv4Example.updateCurrentExample = function (brfManager, imageData, draw) {
 
@@ -16,26 +29,31 @@
 
 		// Face detection results: a rough rectangle used to start the face tracking.
 
-		draw.drawRects(brfManager.getAllDetectedFaces(), false, 1.0, 0x00a1ff, 0.5);
-		draw.drawRects(brfManager.getMergedDetectedFaces(), false, 2.0, 0xffd200, 1.0);
+		// draw.drawRects(brfManager.getAllDetectedFaces(), false, 1.0, 0x00a1ff, 0.5);
+		// draw.drawRects(brfManager.getMergedDetectedFaces(), false, 2.0, 0xffd200, 1.0);
 
 		var faces = brfManager.getFaces(); // default: one face, only one element in that array.
 
-		if (faces.length==0)		
-{
-	// document.getElementById('_webcam').setAttribute("hidden",true);
-	
-}
-		else{
-			// document.getElementById('_webcam').setAttribute("hidden",false);
-
-		}
+		
+		
+		 
+		
+		  
+				 
+		  
 
 		for (var i = 0; i < faces.length; i++) {
 
 			var face = faces[i];
 
 			if (face.state === brfv4.BRFState.FACE_TRACKING) {
+			
+				document.getElementById('_drawing').style.display="block";
+			document.getElementById('_imageData').style.display="block";
+			document.getElementById('_faceSub').style.display="block";
+			document.getElementById('_t3d').style.display="block";
+			document.getElementById('_f3d').style.display="block";
+			document.getElementById('_webcam').style.display="block";
 
 				// simple blink detection
 
@@ -84,14 +102,22 @@
 					
 					// console.log("blink " + blinkRatio.toFixed(2) + " " + yLE.toFixed(2) + " " +
 					// 	yRE.toFixed(2) + " " + yN.toFixed(2));
-					if ((yLE > yRE) && !_blinked) {
+					if ((yLE > yRE+0.5) && !_blinked) {
 						//console.log('Left ' + yLE.toFixed(2));
-						document.getElementById("eyeClosed").innerHTML += " Left ";
+						document.getElementById("eyeClosed").innerHTML += " Left";
+						console.log("LEFT: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
 					}
-					else if((yRE > yLE) && !_blinked) { 
+					else if((yRE > yLE+0.5) && !_blinked) { 
 						//console.log('Right ' + yRE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += "  Right"; 
+						console.log("Left: "+yLE+" RIGHT: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
 						}
+						else if(!_blinked) { 
+						
+							document.getElementById("eyeClosed").innerHTML += "  Both"; 
+							console.log("BOTH Left: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
+							}
+					
 						
 					blink();
 				}
@@ -108,7 +134,8 @@
 				if (_blinked) {
 					
 					document.getElementById("blink").innerHTML = "Blinked";
-					document.body.style.backgroundColor = "black";
+					document.body.style.backgroundColor =   getRandomColor();
+					
 				
 				
 			
@@ -121,6 +148,23 @@
 
 				storeFaceShapeVertices(v);
 			}
+
+
+
+		else  {
+			document.getElementById('_drawing').style.display="none";
+			document.getElementById('_imageData').style.display="none";
+			document.getElementById('_faceSub').style.display="none";
+			document.getElementById('_t3d').style.display="none";
+			document.getElementById('_f3d').style.display="none";
+			document.getElementById('_webcam').style.display="none";
+		
+			document.getElementById("blink").innerHTML = "CAN'T DETECT YOUR FACE";
+			
+		}
+
+
+
 		}
 	};
 
@@ -129,7 +173,7 @@
 
 		if (_timeOut > -1) { clearTimeout(_timeOut); }
 
-		_timeOut = setTimeout(resetBlink, 500);
+		_timeOut = setTimeout(resetBlink, 400);
 	}
 
 	function resetBlink() {
