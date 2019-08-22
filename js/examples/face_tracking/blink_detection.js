@@ -102,12 +102,12 @@
 					
 					// console.log("blink " + blinkRatio.toFixed(2) + " " + yLE.toFixed(2) + " " +
 					// 	yRE.toFixed(2) + " " + yN.toFixed(2));
-					if ((yLE > yRE+0.5) && !_blinked) {
+					if ((yLE > yRE+0.6) && !_blinked) {
 						//console.log('Left ' + yLE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += " Left";
 						console.log("LEFT: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
 					}
-					else if((yRE > yLE+0.5) && !_blinked) { 
+					else if((yRE > yLE+0.6) && !_blinked) { 
 						//console.log('Right ' + yRE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += "  Right"; 
 						console.log("Left: "+yLE+" RIGHT: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
