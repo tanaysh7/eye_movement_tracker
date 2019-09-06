@@ -25,6 +25,17 @@
 
 		brfManager.update(imageData);
 
+		var pix = imageData;
+
+        var totalL = 0;
+        for (var i = 0, n = pix.length; i < n; i += 4) {
+            // Red, Green and Blue have different influence on the total luminance
+            totalL += pix[i] * .3 + pix[i + 1] * .59 + pix[i + 2] * .11;
+		}
+		
+		if (totalL<300000)
+		{alert("Too dark")}
+
 		draw.clear();
 
 		// Face detection results: a rough rectangle used to start the face tracking.
@@ -48,7 +59,7 @@
 
 			if (face.state === brfv4.BRFState.FACE_TRACKING) {
 			
-				document.getElementById('_drawing').style.display="block";
+			document.getElementById('_drawing').style.display="block";
 			document.getElementById('_imageData').style.display="block";
 			document.getElementById('_faceSub').style.display="block";
 			document.getElementById('_t3d').style.display="block";
@@ -102,22 +113,17 @@
 					
 					// console.log("blink " + blinkRatio.toFixed(2) + " " + yLE.toFixed(2) + " " +
 					// 	yRE.toFixed(2) + " " + yN.toFixed(2));
-					if ((yLE > yRE+0.6) && !_blinked) {
+					if ((yLE > yRE) && !_blinked) {
 						//console.log('Left ' + yLE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += " Left";
 						console.log("LEFT: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
 					}
-					else if((yRE > yLE+0.6) && !_blinked) { 
+					else if((yRE > yLE) && !_blinked) { 
 						//console.log('Right ' + yRE.toFixed(2));
 						document.getElementById("eyeClosed").innerHTML += "  Right"; 
 						console.log("Left: "+yLE+" RIGHT: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
 						}
-						else if(!_blinked) { 
-						
-							document.getElementById("eyeClosed").innerHTML += "  Both"; 
-							console.log("BOTH Left: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
-							}
-					
+							
 						
 					blink();
 				}
