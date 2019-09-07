@@ -1,4 +1,5 @@
 (function exampleCode() {
+
 	"use strict";
 
 	brfv4Example.initCurrentExample = function (brfManager, resolution) {
@@ -6,6 +7,7 @@
         //     return false;
         //   }
 		brfManager.init(resolution, resolution, brfv4Example.appId);
+		
 
 
 		
@@ -21,22 +23,48 @@
 		return color;
 	  }
 
+	 
+
 	brfv4Example.updateCurrentExample = function (brfManager, imageData, draw) {
+
+		
 
 		brfManager.update(imageData);
 
 		var pix = imageData;
 
-        var totalL = 0;
+
+		var totalL = 0;
+		var dark=0
+		var light=0
+
         for (var i = 0, n = pix.length; i < n; i += 4) {
             // Red, Green and Blue have different influence on the total luminance
-            totalL += pix[i] * .3 + pix[i + 1] * .59 + pix[i + 2] * .11;
+			totalL += pix[i] * .3 + pix[i + 1] * .59 + pix[i + 2] * .11;
+			
+
+			var max_rgb = Math.max(Math.max(pix[i], pix[i+1]), pix[i+2]);
+			if (max_rgb < 128)
+				dark++;
+			else
+				light++;
 		}
+
+		var dl_diff = ((light - dark) / (n));
+		if (dl_diff + 0.1 < 0)
+		alert("Too dark")
+	
+
 		
-		if (totalL<300000)
-		{alert("Too dark")}
+		
+		// if (totalL/n<300000)
+		// {alert("Very dark")}
+		// console.log(totalL/n)
 
 		draw.clear();
+
+
+
 
 		// Face detection results: a rough rectangle used to start the face tracking.
 
@@ -77,8 +105,10 @@
 
 				var v = face.vertices;
 
-				if (_oldFaceShapeVertices.length === 0) storeFaceShapeVertices(v);
-
+				if (_oldFaceShapeVertices.length === 0) {
+					storeFaceShapeVertices(v);
+					window.timenow= new Date().getTime();
+				}
 				var k, l, yLE, yRE;
 
 				// Left eye movement (y)
@@ -115,13 +145,43 @@
 					// 	yRE.toFixed(2) + " " + yN.toFixed(2));
 					if ((yLE > yRE) && !_blinked) {
 						//console.log('Left ' + yLE.toFixed(2));
-						document.getElementById("eyeClosed").innerHTML += " Left";
-						console.log("LEFT: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
+						document.getElementById("eyeClosed").innerHTML = " Left";
+						document.getElementById("lefteye").innerHTML= parseInt(document.getElementById("lefteye").innerHTML) + 1; 
+						
+						//console.log("LEFT: "+yLE+" Right: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
+
+					
+						if(!window.timenow){
+							window.timenow = new Date().getTime();
+						}
+						else{
+				
+							document.getElementById("timer").innerHTML = (new Date().getTime()-window.timenow )/1000;
+							window.timenow  = new Date().getTime();
+
+						}
+
+
 					}
 					else if((yRE > yLE) && !_blinked) { 
 						//console.log('Right ' + yRE.toFixed(2));
-						document.getElementById("eyeClosed").innerHTML += "  Right"; 
-						console.log("Left: "+yLE+" RIGHT: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
+						document.getElementById("eyeClosed").innerHTML = "  Right"; 
+						document.getElementById("righteye").innerHTML= parseInt(document.getElementById("righteye").innerHTML) + 1; 
+					//	console.log("Left: "+yLE+" RIGHT: "+yRE+" Blink ratio: "+blinkRatio+" YN: " + yN.toFixed(2));
+
+
+						if(!window.timenow){
+							window.timenow = new Date().getTime();
+						}
+						else{
+							document.getElementById("timer").innerHTML = (new Date().getTime()-window.timenow)/1000;
+							window.timenow = new Date().getTime();
+
+						}
+
+
+
+
 						}
 							
 						

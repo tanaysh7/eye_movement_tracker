@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
 	<meta charset="utf-8">
 
@@ -18,42 +25,82 @@
 
 <body>
 
-<div id="_wrapper">
-		
-	<div id="_content">
-		<h2 id="blink"> </h2>
-		
-		<style>
-		#blink{color: purple;}
-		#eyeClosed{color: Red;
-  position: absolute;
-  right: 10px;
-  width: 200px;
- 
-  border: 3px solid green;
-} 
-		</style>
-		<video  id="_webcam" playsinline></video>
-		<canvas id="_imageData"></canvas>
-		<canvas id="_faceSub"></canvas>
-		<canvas id="_t3d"></canvas>
-		<canvas id="_f3d"></canvas>
-		<canvas id="_drawing"></canvas>
-		<!-- <div id="_stats"></div>
+	<div id="_wrapper">
+
+		<div id="_content">
+			<h2 id="blink"> </h2>
+			<video id="_webcam" playsinline></video>
+			<canvas id="_imageData"></canvas>
+			<canvas id="_faceSub"></canvas>
+			<canvas id="_t3d"></canvas>
+			<canvas id="_f3d"></canvas>
+			<canvas id="_drawing"></canvas>
+			<!-- <div id="_stats"></div>
 		<div id="_progressBar"></div> -->
-		<!-- <a href="http://www.tastenkunst.com" target="_blank">
+			<!-- <a href="http://www.tastenkunst.com" target="_blank">
 			<img id="_brfv4_logo" src="assets/brfv4_logo.png" alt="BRFv4 Logo"/>
 		</a> -->
 
-		
-	</div>
-<!-- 
-	<div id="_subline"></div>
-	<div id="_highlight"><pre><code class="javascript" id="_gist"></code></pre></div> -->
-</div>
-<h3 id="eyeClosed"> </h3>
 
-<!-- <div id="_settingsRight"></div> -->
+		</div>
+		
+		<div id="down">
+			<div class="jumbotron">
+				<div class="row w-100">
+					<div class="col-md-3">
+						<div class="card border-info mx-sm-1 p-3">
+							<div class="card border-info shadow text-info p-3 my-card"><span class="fa fa-eye"
+									aria-hidden="true"></span></div>
+							<div class="text-info text-center mt-3">
+								<h4>Left Eye</h4>
+							</div>
+							<div class="text-info text-center mt-2">
+								<h1 id="lefteye">0</h1>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card border-success mx-sm-1 p-3">
+							<div class="card border-success shadow text-success p-3 my-card"><span class="fa fa-eye"
+									aria-hidden="true"></span></div>
+							<div class="text-success text-center mt-3">
+								<h4>Right Eye</h4>
+							</div>
+							<div class="text-success text-center mt-2">
+								<h1 id="righteye">0</h1>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card border-danger mx-sm-1 p-3">
+							<div class="card border-danger shadow text-danger p-3 my-card"><span class="fa fa-heart"
+									aria-hidden="true"></span></div>
+							<div class="text-danger text-center mt-3">
+								<h4>After (in Sec)</h4>
+							</div>
+							<div class="text-danger text-center mt-2">
+								<h1 id="timer">0</h1>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="card border-warning mx-sm-1 p-3">
+							<div class="card border-warning shadow text-warning p-3 my-card"><span
+									class="fa fa-refresh fa-spin fa-fw" aria-hidden="true"></span></div>
+							<div class="text-warning text-center mt-3">
+								<h4>Last</h4>
+							</div>
+							<div class="text-warning text-center mt-2">
+								<h1 id='eyeClosed'>None</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 </body>
 
