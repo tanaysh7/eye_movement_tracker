@@ -104,6 +104,38 @@
 				// If rapid movement of the current points was detected it's considered a blink.
 
 				var v = face.vertices;
+			
+				
+				var points = document.getElementById('divide').getAttribute("points");
+points = v[27*2].toString()+', '+(v[27*2+1]-80).toString()+' ';
+points += v[8*2].toString()+', '+(v[8*2+1]+20).toString()+' ';
+document.getElementById('divide').setAttribute('points', points );
+var rightface=[8,27,24,26,16,12,11,10,9,8]
+var points = document.getElementById('mask').getAttribute("points");
+points='';
+for (var i=0;i<rightface.length;i++){
+		if( rightface[i]==27||rightface[i]==24||rightface[i]==26)
+{	var extra=0;
+	if (rightface[i]==27) extra=-20;
+	points += v[rightface[i]*2].toString()+', '+(v[rightface[i]*2+1]-50+extra).toString()+' ';
+
+}
+// else if( rightface[i]==57)
+// {
+
+// 	points += v[rightface[i]*2].toString()+', '+(v[rightface[i]*2+1]+10).toString()+' ';
+
+// }
+else{
+	points += v[rightface[i]*2].toString()+', '+(v[rightface[i]*2+1]).toString()+' ';
+}
+}
+
+document.getElementById('mask').setAttribute('points', points );
+
+// console.log(v[27*2],v[27*2+1]);
+// console.log(v[57*2],v[57*2+1])
+				
 
 				if (_oldFaceShapeVertices.length === 0) {
 					storeFaceShapeVertices(v);
